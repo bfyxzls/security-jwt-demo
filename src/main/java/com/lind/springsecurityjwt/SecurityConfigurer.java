@@ -1,6 +1,7 @@
 package com.lind.springsecurityjwt;
 
 import com.lind.springsecurityjwt.filter.JwtRequestFilter;
+import com.lind.springsecurityjwt.filter.MyFilterSecurityInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,15 +13,18 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  private UserDetailsService myUserDetailsService;
+  MyFilterSecurityInterceptor myFilterSecurityInterceptor;
   @Autowired
-  private JwtRequestFilter jwtRequestFilter;
+  JwtRequestFilter jwtRequestFilter;
+  @Autowired
+  private UserDetailsService myUserDetailsService;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -45,6 +49,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         anyRequest().authenticated().and().
         exceptionHandling().and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    httpSecurity.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
     httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
   }
