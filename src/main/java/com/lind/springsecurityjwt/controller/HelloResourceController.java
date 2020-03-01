@@ -1,4 +1,4 @@
-package com.lind.springsecurityjwt;
+package com.lind.springsecurityjwt.controller;
 
 import com.lind.springsecurityjwt.model.AuthenticationRequest;
 import com.lind.springsecurityjwt.model.AuthenticationResponse;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloResource {
+public class HelloResourceController {
   @Autowired
   private AuthenticationManager authenticationManager;
 
@@ -28,13 +28,20 @@ public class HelloResource {
   private MyUserDetailsService userDetailsService;
 
   @GetMapping("/index")
-  public String index() {
-    return "success";
+  public ResponseEntity index() {
+    return ResponseEntity.ok("success");
+  }
+
+  @GetMapping("/user/add")
+  public ResponseEntity userAdd() {
+    int a = 0;
+    int c = 1 / a;
+    return ResponseEntity.ok("user add success");
   }
 
   @GetMapping("/hello")
-  public String hello() {
-    return "hello";
+  public ResponseEntity hello() {
+    return ResponseEntity.ok("hello");
   }
 
   @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
