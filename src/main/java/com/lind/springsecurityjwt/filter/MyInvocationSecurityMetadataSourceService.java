@@ -32,8 +32,9 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
     List<Permission> permissions = Arrays.asList(new Permission("/index", "首页"),
         new Permission("/user/list", "用户列表"),
         new Permission("/user/add", "用户添加"),
-        new Permission("/user/delete", "用户删除"),
-        new Permission("/hello", "欢迎"));
+        new Permission("/user/delete", "用户删除")
+       // new Permission("/hello", "欢迎") //如果不希望对/hello做权限限制，需要把它注释掉
+    );
     for (Permission permission : permissions) {
       array = new ArrayList<>();
       cfg = new SecurityConfig(permission.getName());
@@ -45,7 +46,12 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 
   }
 
-  //此方法是为了判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定用户是否有此权限。如果不在权限表中则放行。
+  /**
+   * 判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定用户是否有此权限。如果不在权限表中则放行。
+   * @param object
+   * @return
+   * @throws IllegalArgumentException
+   */
   @Override
   public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
     if (map == null) {

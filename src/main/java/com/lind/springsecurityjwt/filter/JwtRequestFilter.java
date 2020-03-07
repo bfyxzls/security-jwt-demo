@@ -15,6 +15,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * 只对请求做拦截，获取用户信息，而权限判断由MyAccessDecisionManager来实现.
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
   @Autowired
@@ -36,7 +39,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       jwt = authorizationHeader.substring(7);
       username = jwtUtil.extractUsername(jwt);
     }
-
 
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 

@@ -15,6 +15,12 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
 
+/**
+ * 拦截器.
+ *
+ * @author lind
+ * @date 2020-03-05
+ */
 @Service
 public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
@@ -46,7 +52,6 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
     //再调用MyAccessDecisionManager的decide方法来校验用户的权限是否足够
     InterceptorStatusToken token = super.beforeInvocation(fi);
     try {
-      //执行下一个拦截器
       fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
     } finally {
       super.afterInvocation(token, null);
