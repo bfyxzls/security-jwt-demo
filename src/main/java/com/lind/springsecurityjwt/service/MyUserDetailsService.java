@@ -13,8 +13,8 @@ public class MyUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
     return new User("zzl", "zzl", Arrays.asList(
-        new SimpleGrantedAuthority("首页"),
-        new SimpleGrantedAuthority("用户列表"),
-        new SimpleGrantedAuthority("用户添加")));
+        new SimpleGrantedAuthority("home"),
+        new SimpleGrantedAuthority("userList"),
+        new SimpleGrantedAuthority("userAdd")));
   }
 }
